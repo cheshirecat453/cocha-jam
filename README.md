@@ -1,2 +1,2 @@
-# cocha-jam
-This is the repo for the jam 2022
+# Wiracocha
+The adventure of the little armadillo searching for his missing friends
