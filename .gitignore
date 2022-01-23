@@ -70,3 +70,6 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+Wiracocha/Temp/workerlic
+Wiracocha/Temp/UnityLockfile
+Wiracocha/Temp/__Backupscenes/0.backup
