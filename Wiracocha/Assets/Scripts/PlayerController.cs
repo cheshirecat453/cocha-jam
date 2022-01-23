@@ -13,8 +13,8 @@ public class PlayerController : MonoBehaviour
     private State state = State.idle;
     [SerializeField] private LayerMask Ground;
     [SerializeField] private float Speed = 5f;
-    [SerializeField] private float jumpForce = 10f;
-    [SerializeField] private float hurtForce = 10f;
+    [SerializeField] private float jumpForce = 8f;
+    [SerializeField] private float hurtForce = 8f;
     [SerializeField] private int health = 3;
     [SerializeField] private Text healthAmmount;
     [SerializeField] private int pineapples = 0;
@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent <Rigidbody2D>();
         anim = GetComponent <Animator>();
         coll = GetComponent <Collider2D>();
-        //healthAmmount.text = health.ToString();
+        healthAmmount.text = health.ToString();
     }
 
     // Update is called once per frame
@@ -62,11 +62,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Enemy" )
+        if (other.gameObject.tag == "Other" )
         {
-            if (state == State.falling)
+            hurtForce = 16f;
+        }
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Other" )
+        {
+            if (state == State.falling && other.gameObject.tag != "Other")
             {
                 Destroy(other.gameObject);
+                rb.velocity = new Vector2(rb.velocity.x, 8f);
             }
             else
             {
@@ -75,12 +80,12 @@ public class PlayerController : MonoBehaviour
                 if (other.gameObject.transform.position.x > transform.position.x)
                 {
                     //enemy is to right
-                    rb.velocity = new Vector2(-hurtForce, rb.velocity.y);
+                    rb.velocity = new Vector2(-hurtForce, rb.velocity.y+8f);
                 }
                 else
                 {
                     //enemy is to left
-                    rb.velocity = new Vector2(hurtForce, rb.velocity.y); 
+                    rb.velocity = new Vector2(hurtForce, rb.velocity.y+8f); 
                 }
             }
         }
@@ -139,8 +144,8 @@ public class PlayerController : MonoBehaviour
 
     private void HandleHealth()
     {
-        //health -= 1;
-        //healthAmmount.text = health.ToString();
+        health -= 1;
+        healthAmmount.text = health.ToString();
         if (health <= 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
